@@ -10,29 +10,27 @@ def fish_voiceover(text_fragment):
     if fishaudio_api_key in ("", None) or fishaudio_voice_id in ("", None):  # check for a remotely proper api key
         print("ERROR: At least one of the fish.audio API keys is missing")
         exit()
+
 # For the free voiceover, fish.audio requires doing it by hand.
     # JSON for TTS
     headers = {
         "Authorization": f"Bearer {fishaudio_api_key}",
         "Content-Type": "application/json",
-        "model": "s2.1-pro-free",
-    }
+        "model": "s2.1-pro-free",}
     body = {
         "text": text_fragment, # main input variable goes here
         "reference_id": fishaudio_voice_id,
-        "format": "mp3",
-    }
+        "format": "mp3",}
 
     with httpx.Client() as client:
         response = client.post(
             "https://api.fish.audio/v1/tts",
             headers=headers,
-            json=body,
-        )
+            json=body,)
 
     response.raise_for_status()
 
     # need to save a timestamp as the filename
     with open("./.tmp/voiceover.mp3", "wb") as file:
         file.write(response.content)
-    print("✓ Audio saved to voiceover.mp3") # this needs to print a timestamp
+    print("✓ Audio saved to ./.tmp/voiceover.mp3") # this needs to print a timestamp
