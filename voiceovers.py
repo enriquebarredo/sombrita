@@ -30,7 +30,6 @@ def fish_voiceover(text_fragment):
 
     response.raise_for_status()
 
-    # need to save a timestamp as the filename
-    with open("./.tmp/voiceover.mp3", "wb") as file:
-        file.write(response.content)
-    print("✓ Audio saved to ./.tmp/voiceover.mp3") # this needs to print a timestamp
+    voiceover = response.content
+
+    return voiceover

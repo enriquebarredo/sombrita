@@ -6,9 +6,9 @@
 
 from dotenv import load_dotenv
 load_dotenv()
-import translator
-import voiceover
-import extractor
+import translators
+import voiceovers
+import extractors
 
 ########## config #############
 # Full explanation: https://developers.laratranslate.com/docs/supported-languages
@@ -18,12 +18,12 @@ user_l2 = None   # The language you're learning--None auto-selects;
 ###############################
 # Это - простой тестовый фрагмент текста для проверки синтеза речи и перевода--звучу ли я приемлемо?
 def main():
-    l2_text = extractor.clipboard_extract()
+    l2_text = extractors.clipboard_extract()
 
     if user_l2 == None:
-        l1_text, found_l2   = translator.lara_translate(out_lang = user_l1, in_lang = None, in_text = l2_text)
+        l1_text, found_l2   = translators.lara_translate(out_lang = user_l1, in_lang = None, in_text = l2_text)
     else:
-        l1_text, _          = translator.lara_translate(out_lang = user_l1, in_lang = user_l2, in_text = l2_text)
+        l1_text, _          = translators.lara_translate(out_lang = user_l1, in_lang = user_l2, in_text = l2_text)
 
     print(f"{user_l1}: {l1_text}")
 
@@ -32,7 +32,12 @@ def main():
     else:
         print(f"{user_l2}: {l2_text}")    
 
-    voiceover.fish_voiceover(l2_text)
+    l2_audio = voiceovers.fish_voiceover(l2_text)
+
+    # need to save a timestamp as the filename
+    with open("./.tmp/voiceover.mp3", "wb") as file:
+        file.write(l2_audio)
+    print("✓ Audio saved to ./.tmp/voiceover.mp3")
 
 if __name__ == "__main__":
     main()
