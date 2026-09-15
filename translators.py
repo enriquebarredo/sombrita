@@ -4,27 +4,27 @@
 import os
 
 from lara_sdk import Credentials, Translator  #  for the lararium
-def lara_translate(out_lang = "en", in_lang = "es-MX", in_text="!Hola, mundo!"):
+def lara_translate(raws="!Hola, mundo!", lang_in = "es-MX", lang_out = "en"):
 
-    lara_api_key = os.environ.get("LARA_ACCESS_KEY_ID")
-    lara_access_key = os.environ.get("LARA_ACCESS_KEY_SECRET")
-    if lara_api_key in ("", None) or lara_access_key in ("", None):  # check for a remotely proper api key
+    lara_id_key = os.environ.get("LARA_ACCESS_KEY_ID")
+    lara_secret_key = os.environ.get("LARA_ACCESS_KEY_SECRET")
+    if lara_id_key in ("", None) or lara_secret_key in ("", None):  # check for a remotely proper api key
         print("ERROR: At least one of the LaraTranslate API keys is missing")
         exit()
 
 # We're letting their SDK do the heavy lifting
-    credentials = Credentials(lara_api_key, lara_access_key)
+    credentials = Credentials(lara_id_key, lara_secret_key)
 
     # Create translator instance
     lara = Translator(credentials)
     # Simple text translation
     try:
-        textresult = lara.translate(in_text, target=out_lang, source=in_lang)
-        out_text = textresult.translation
-        out_autodetected_lang = textresult.source_language
+        textresult = lara.translate(raws, source=lang_in, target=lang_out)
+        subs = textresult.translation
+        identified_lang = textresult.source_language
     except Exception as error:
         print(f"LaraTranslate translation error: {error}")
         exit()
     
 #    print(lara.languages())
-    return out_text, out_autodetected_lang
+    return subs, identified_lang

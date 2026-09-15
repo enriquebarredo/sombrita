@@ -21,18 +21,18 @@ def main():
     l2_text = extractors.clipboard_extract()
 
     if user_l2 == None:
-        l1_text, found_l2   = translators.lara_translate(out_lang = user_l1, in_lang = None, in_text = l2_text)
+        l1_text, identified_l2   = translators.lara_translate(raws = l2_text, lang_in = None, lang_out = user_l1)
     else:
-        l1_text, _          = translators.lara_translate(out_lang = user_l1, in_lang = user_l2, in_text = l2_text)
+        l1_text, _          = translators.lara_translate(raws = l2_text, lang_in = user_l2, lang_out = user_l1)
 
     print(f"{user_l1}: {l1_text}")
 
     if user_l2 == None:
-        print(f"{found_l2}: {l2_text}")
+        print(f"{identified_l2}: {l2_text}")
     else:
         print(f"{user_l2}: {l2_text}")    
 
-    l2_audio = voiceovers.fish_voiceover(l2_text)
+    l2_audio = voiceovers.fish_voiceover(raws=l2_text)
 
     # need to save a timestamp as the filename
     with open("./.tmp/voiceover.mp3", "wb") as file:

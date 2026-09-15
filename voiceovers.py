@@ -3,7 +3,7 @@
 
 import os, httpx
 
-def fish_voiceover(text_fragment):
+def fish_voiceover(raws="!Hola, mundo!"):
 
     fishaudio_api_key = os.environ.get("FISHAUDIO_API_KEY")
     fishaudio_voice_id = os.environ.get("FISHAUDIO_VOICE_ID")
@@ -18,7 +18,7 @@ def fish_voiceover(text_fragment):
         "Content-Type": "application/json",
         "model": "s2.1-pro-free",}
     body = {
-        "text": text_fragment, # main input variable goes here
+        "text": raws, # main input variable goes here
         "reference_id": fishaudio_voice_id,
         "format": "mp3",}
 
@@ -30,6 +30,6 @@ def fish_voiceover(text_fragment):
 
     response.raise_for_status()
 
-    voiceover = response.content
+    dubs = response.content
 
-    return voiceover
+    return dubs
