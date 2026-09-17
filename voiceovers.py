@@ -30,6 +30,6 @@ def fish_voiceover(raws="!Hola, mundo!"):
 
     response.raise_for_status()
 
-    dubs = response.content
+    voiceover = response.content
 
-    return dubs
+    return voiceover
