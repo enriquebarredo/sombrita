@@ -4,7 +4,7 @@
 *.ogg
 *.wav
 # designated trash folder for output media
-/tmp/
+.tmp/
 
 # Created by https://www.toptal.com/developers/gitignore/api/linux,windows,pycharm,visualstudiocode,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=linux,windows,pycharm,visualstudiocode,python
