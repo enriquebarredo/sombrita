@@ -5,7 +5,7 @@ import os, httpx
 
 def fish_voiceover(raws="!Hola, mundo!"):
 
-    fishaudio_api_key = os.environ.get("FISHAUDIO_API_KEY")
+    fishaudio_api_key = os.environ.get("FISH_API_KEY")
     fishaudio_voice_id = os.environ.get("FISHAUDIO_VOICE_ID")
     if fishaudio_api_key in ("", None) or fishaudio_voice_id in ("", None):  # check for a remotely proper api key
         print("ERROR: At least one of the fish.audio API keys is missing")
