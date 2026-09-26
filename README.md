@@ -30,12 +30,14 @@ Braindump:
 - Implement basic local OCR (make it expect a clipped screenshot with constant filename)
 - Implement basic API calls for OCR (same clipped screenshot method)
 - Implement basic elevenlabs API calls as alternative TTS.
-- Get and hardcode all default official/copyright-free voice IDs from fish.audio as fallback (for en, es, fr, jp, zh, ru, at least)
-    - Write the logic in `voiceovers.fish_voiceover()` to select a voice id according to a passed variable (`user_l2`/`identified_l2`)
+- Integrate voice model lookup as fallback to hardcoding (`fish_audio_explore` into `voiceovers.py`), just in case.
+    - Take more official/copyright-free Fish Audio models to voiceover popular L2s (pt, ar, ko, de, it, for now)
+- Handle input parameters for L1/L2 (`L1_CODE`/`L2_CODE`) `voiceovers.fish_voiceover()` so character case is not an annoyance.
+- Return title of used model (so i can judge what voices stay as i develop the scripts)
+- Add support for 'fave' voices (in the .env for now?) to override fallback voices?
 - Look into PyQt/Side6, break up the GUI into workable conceptual blocks for drafting/planning a diagram.
 - Add logic to enable turning off/on features in the pipeline (e.g. TTS only, MT only, OCR-only etc.)
-- Look deeper into APIs I already work with.
-- Implement proper error handling for API functions.
+- Implement proper error handling for Fish Audio API functions.
 - Decide on a persistence layer for outputs: csv, json, sqlite3.
     - Output L1/L2 texts and .mp3 into persistent storage.
     - Write logic to read from persistence layer to display it.
