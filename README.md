@@ -32,7 +32,6 @@ Braindump:
 - Implement basic elevenlabs API calls as alternative TTS.
 - Integrate voice model lookup as fallback to hardcoding (`fish_audio_explore` into `voiceovers.py`), just in case.
     - Take more official/copyright-free Fish Audio models to voiceover popular L2s (pt, ar, ko, de, it, for now)
-- Handle input parameters for L1/L2 (`L1_CODE`/`L2_CODE`) `voiceovers.fish_voiceover()` so character case is not an annoyance.
 - Return title of used model (so i can judge what voices stay as i develop the scripts)
 - Add support for 'fave' voices (in the .env for now?) to override fallback voices?
 - Look into PyQt/Side6, break up the GUI into workable conceptual blocks for drafting/planning a diagram.

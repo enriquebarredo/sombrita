@@ -89,24 +89,27 @@ def fish_voiceover(raws="!Hola, mundo!", lang_in="es"):
 
     fishaudio_api_key = os.environ.get("FISH_API_KEY")
 
-    if lang_in == "ru":
+    if lang_in[:2] == "ru":
         fishaudio_voice = random.choice(FISHAUDIO_VOICES["ru-RU"])
-    elif lang_in=="zh-TW":
-        fishaudio_voice = random.choice(FISHAUDIO_VOICES["zh-TW"])
-    elif lang_in=="zh":
-        fishaudio_voice = random.choice(FISHAUDIO_VOICES["zh-CN"])
-    elif lang_in=="ja":
+    elif lang_in[:2]=="zh":
+        if lang_in[-2:]=="TW":
+            fishaudio_voice = random.choice(FISHAUDIO_VOICES["zh-TW"])
+        else:
+            fishaudio_voice = random.choice(FISHAUDIO_VOICES["zh-CN"])
+    elif lang_in[:2]=="en":
+        if lang_in[-2:]=="GB":
+            fishaudio_voice = random.choice(FISHAUDIO_VOICES["en-GB"])
+        else:
+            fishaudio_voice = random.choice(FISHAUDIO_VOICES["en-US"])
+    elif lang_in[:2]=="ja":
         fishaudio_voice = random.choice(FISHAUDIO_VOICES["ja-JP"])
-    elif lang_in=="en-GB":
-        fishaudio_voice = random.choice(FISHAUDIO_VOICES["en-GB"])
-    elif lang_in=="en":
-        fishaudio_voice = random.choice(FISHAUDIO_VOICES["en-US"])
-    elif lang_in=="es":
+    elif lang_in[:2]=="es":
         fishaudio_voice = random.choice(FISHAUDIO_VOICES["es-MX"])
-    elif lang_in=="fr":
+    elif lang_in[:2]=="fr":
         fishaudio_voice = random.choice(FISHAUDIO_VOICES["fr-FR"])
     else: 
         fishaudio_voice = FISHAUDIO_VOICES["en-IN"][0]  # Things went bad if you hear Aarav
+
 
     if fishaudio_api_key in ("", None) or fishaudio_voice in ("", None):  # check for a remotely proper api key
         print("ERROR: At least one of the fish.audio API keys is missing")
