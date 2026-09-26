@@ -32,8 +32,8 @@ todo hombre hará todas las cosas y sabrá todo.
 ########## config #############
 # Full explanation: https://developers.laratranslate.com/docs/supported-languages
 # Short explanation: Strings of 2-letter codes for langs (ISO639) and regions (optional, prefixed with a dash: "es-MX", "fr-CA", "zh-CN")
-L1_CODE = "zh-TW"   # The language you understand
-L2_CODE = "es"   # The language you're learning--None is "Auto"; 
+L1_CODE = "ru"   # The language you understand
+L2_CODE = None   # The language you're learning--None is "Auto"; 
 ENABLE_INITIALIZATION_DOTFILES = False # Basic .env % .tmp check
 ###############################
 
@@ -58,17 +58,11 @@ def main():
 
     if L2_CODE is None:
         l1_text, identified_l2_code  = translators.lara_translate(raws = l2_text, lang_in = None, lang_out = L1_CODE)
-    else:
-        l1_text, _ = translators.lara_translate(raws = l2_text, lang_in = L2_CODE, lang_out = L1_CODE)
-
-    if L2_CODE is None:
         print(f"{identified_l2_code}: {l2_text}")
-    else:
-        print(f"{L2_CODE}: {l2_text}")    
-
-    if L2_CODE is None:
         l2_audio = voiceovers.fish_voiceover(raws=l2_text, lang_in=identified_l2_code)
     else:
+        l1_text, _ = translators.lara_translate(raws = l2_text, lang_in = L2_CODE, lang_out = L1_CODE)
+        print(f"{L2_CODE}: {l2_text}")
         l2_audio = voiceovers.fish_voiceover(raws=l2_text, lang_in=L2_CODE)
 
     l2_audio_filename = "./.tmp/" + timestamp + ".mp3"
