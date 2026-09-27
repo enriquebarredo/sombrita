@@ -38,11 +38,9 @@ ENABLE_INITIALIZATION_DOTFILES = False # Basic .env % .tmp check
 ###############################
 
 if L2_CODE is not None:
-    L2_CODE = L2_CODE[:2].lower() + L2_CODE[2:]
-    L2_CODE = L2_CODE[:2] + L2_CODE[2:].upper()
+    L2_CODE = L2_CODE[:2].lower() + "-" + L2_CODE[-2:].upper()
 
-L1_CODE = L1_CODE[:2].lower() + L1_CODE[2:]
-L1_CODE = L1_CODE[:2] + L1_CODE[2:].upper()
+L1_CODE = L1_CODE[:2].lower() + "-" + L1_CODE[-2:].upper()
 # from now on it is assumed that the leftmost 2-characters stand for the lang, the rightmost 2 characters for the region
 # and that any check for a missing region will return the lang instead.
 
@@ -80,7 +78,7 @@ def initialize_dotfiles():
     # Check if .env exists and, if it doesn't, fill up empty keys.
     if not os.path.isfile("./.env"):
         with open(".env", "w") as file:
-            file.write("FISHAUDIO_API_KEY=\nFISHAUDIO_VOICE_ID=\nLARA_ACCESS_KEY_ID=\nLARA_ACCESS_KEY_SECRET=")
+            file.write("LARA_ACCESS_KEY_ID=\nLARA_ACCESS_KEY_SECRET\nFISH_API_KEY=\n")
         print("Created a sample './.env' file to read API keys from")
     # Check if .tmp/ exists and, if it doesn't, create it
     if not os.path.isdir("./.tmp"):
