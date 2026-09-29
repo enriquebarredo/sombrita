@@ -1,5 +1,11 @@
-#fish_audio_explore.py
-import dotenv, os, requests, json
+#SPDX-FileCopyrightText: 2026 Josué Enrique Barredo Alamilla
+#SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+
+"""fish_audio_explore.py lists Fish Audio voice models as a scratch script"""
+
+import json, os
+import dotenv, requests
+
 dotenv.load_dotenv()
 
 # Findings so far:

@@ -1,6 +1,19 @@
 #SPDX-FileCopyrightText: 2026 Josué Enrique Barredo Alamilla
 #SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
-import os, random, httpx
+
+"""
+Text-to-speech providers. Today only Fish Audio: API key is read from .env: FISH_API_KEY.
+
+The model is free-tier S2.1, which is accesible only through HTTP, not SDK.
+FISHAUDIO_VOICES are hardcoded fallback voices. Only en-US voice models were handpicked.
+TODO: fish_audio_explore.py could be folded for dynamic voice model lookup, but running
+    once per session feels excessive--_id s haven't changed since hardcoding. Frequency
+     of _id refreshment would likely depend on frequency of _id retirement. Hardcoding
+     wil teach me if they ever truly change or not.
+"""
+
+import os, random
+import httpx
 
 #  i learnt i shouldn't have attempted to judge tts in languages i don't know
 FISHAUDIO_VOICES = {
@@ -86,6 +99,13 @@ FISHAUDIO_VOICES = {
 #                      }
 
 def fish_voiceover(raws="!Hola, mundo!", lang_in="es"):
+    """
+    TTS raws string with Fish Audio. Return bytes (.mp3).
+
+    lang_in is assumed "ll-RR" locale. First half is matched first.
+    For now, only zh, en match branch for second half.
+    Unsuported locales fall through to Aarav--things went bad upstream if you hear Aarav.
+    """
 
     fishaudio_api_key = os.environ.get("FISH_API_KEY")
 
