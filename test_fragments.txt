@@ -1,0 +1,36 @@
+########## multilingual fragments for quick kopipe #############
+
+# ru
+Это - простой тестовый фрагмент текста дляпроверки синтеза речи и
+перевода--звучу ли я приемлемо?
+
+# ja
+ このサーバーのチャンネルは上記のとおりです.
+
+# en
+'Twas brillig, and the slithy toves
+      Did gyre and gimble in the wabe:
+All mimsy were the borogoves,
+      And the mome raths outgrabe.
+
+“Beware the Jabberwock, my son!
+      The jaws that bite, the claws that catch!
+Beware the Jubjub bird, and shun
+      The frumious Bandersnatch!”
+
+# zh-CN
+城市会感到窒息,我只有寒冷。
+
+# zh-TW
+為啥有這麼多人去點這個阿……?
+
+# fr
+«Quand je bois, je pense--et quand je pense, je bois».
+
+# es
+[whispering] Lo cierto es que vivimos postergando todo lo postergable;
+tal vez todos sabemos profundamente que somos inmortales y que tarde o
+temprano, todo hombre hará todas las cosas y sabrá todo.
+
+# can't get tags to work, probably need to read the Fish Audio API
+################################################################

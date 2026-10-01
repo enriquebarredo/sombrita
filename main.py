@@ -9,7 +9,6 @@ Single shot. Per run:
     2.- Translate: MT it into L1 with Lara Translate, auto-detecting if L2 is None (L1 fragment).
     3.- Voiceover: Get L2 voiceover with Fish Audio
     4.- Outputs: .mp3 gets dumped into ./.tmp/ while both text fragments get printed;
-
 """
 
 import os, datetime
@@ -23,33 +22,8 @@ import extractors, translators, voiceovers
 L1_CODE = "en"   # The language you understand
 L2_CODE = None   # The language you're learning--None is "Auto"; 
 
-ENABLE_INITIALIZATION_DOTFILES = False # Basic .env % .tmp check
+ENABLE_INITIALIZATION_DOTFILES = True # Basic .env % .tmp check
 ###############################
-
-########## test fragments for quick kopipe #############
-# Это - простой тестовый фрагмент текста для проверки синтеза речи и перевода--звучу ли я приемлемо?
-# このサーバーのチャンネルは上記のとおりです.
-"""
-'Twas brillig, and the slithy toves
-      Did gyre and gimble in the wabe:
-All mimsy were the borogoves,
-      And the mome raths outgrabe.
-
-“Beware the Jabberwock, my son!
-      The jaws that bite, the claws that catch!
-Beware the Jubjub bird, and shun
-      The frumious Bandersnatch!” 
-"""
-# 為啥有這麼多人去點這個阿……? # taiwanese accent is really stronk holy guacamole what is that
-# 城市会感到窒息,我只有寒冷。
-# «Quand je bois, je pense--et quand je pense, je bois».
-"""
-[whispering] Lo cierto es que vivimos postergando todo lo postergable;
-tal vez todos sabemos profundamente que somos inmortales y que tarde o temprano, 
-todo hombre hará todas las cosas y sabrá todo.
-"""
-# can't get the tags to work, might be worthwhile to read more Fish
-########################################################
 
 
 # Normalize to lowercase lang, uppercase region: "ll-RR"
