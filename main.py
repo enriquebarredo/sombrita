@@ -49,7 +49,7 @@ def main():
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS \"backlog\" (
-            \"order\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            \"order\" INTEGER PRIMARY KEY,
             \"l2_text\" TEXT,
             \"l1_text\" TEXT,
             \"l2_audio_filename\" TEXT,

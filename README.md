@@ -5,10 +5,13 @@
 
 # Sombrita
 ## Small shadowing tool
-This is a personal language-learning script for shadowing text that doesn't have voiceovers. The inspirations are Alexander Argüelles' language-learning technique, the Assimil textbooks, Artikash's Textractor, and LanguageReactor. Basically, I wanted bargain-bin Assimil-on-demand material for my reading.
+This is a personal language-learning script for shadowing text that doesn't have voiceovers. The inspirations are Alexander Argüelles' language-learning techniques, the Assimil textbooks, Artikash's Textractor, and LanguageReactor. Basically, I wanted bargain-bin Assimil-on-demand material for my reading.
 
 ## Basic Goal
-Use OCR (optical character recognition) to grab any L2 (target/second language) text fragment, get TTS (text-to-speech) voiceover, MT (machine translate) the fragment into L1 (dominant/native language), and display both L1 and L2 fragments as a scrollable bilingual parallel text alongside voiceover playback. The initial work is partitioned in [this diagram](https://drive.google.com/file/d/13t0PHqii64TSU_ZIgV0khLEWL3ViDuJ7/view?usp=sharing)
+Use OCR (optical character recognition) to grab a given L2 (target/second language) text fragment, get a TTS (text-to-speech) voiceover, and get an MT (machine translation) of the fragment into the user's L1 (dominant/native language). Both the L2 fragment and its L1 MT are then displayed as bilingual parallel text with voiceover playback. [This diagram](https://drive.google.com/file/d/13t0PHqii64TSU_ZIgV0khLEWL3ViDuJ7/view?usp=sharing) shows how the initial work is partitioned into modules.
+
+## Endgame
+An Assimil-style e-book that assembles itself as I read. Persistent, browsable log (like a visual novel's backlog) where every entry carries its L2 fragment, its L1 translation, and its own replayable voiceover, accumulated one entry at a time from whatever I'm actually reading. Either text column can be hidden for Assimil method studying, and every entry should be correctable (fix the OCR, fix the MT, regenerate the voiceover). The full picture (loops, database draft, open questions, planning) lies in VISION.txt.
 
 ## Desiderata
 Roughly ordered according to priority. A checkmark means it's working:
@@ -19,7 +22,7 @@ Roughly ordered according to priority. A checkmark means it's working:
 - [ ] Display L1, L2 and playback voiceovers in a browsable bilingual backlog.
 - [ ] Grab L2 text from screenshots taken from an adjustable overlay frame on the screen.
 - [ ] User customization for fonts, text size, spacing, voices.
-- [ ] Recording to listen to oneself and get feedback on one's own pronunciation, a la Anki.
+- [ ] Recording to listen to oneself and get feedback on one's own pronunciation, à la Anki.
 - [ ] Support typewriter-effect (text reveal character-by-character) in games/VNs (image processing).
 - [ ] Look if LLM could offer different translation styles (from literal to natural...).
 - [ ] LLM-generated romanization and linguistic gloss, though this might be helpful only to absolute beginners...
