@@ -11,7 +11,7 @@ Single shot. Per run:
     4.- Outputs: .mp3 gets dumped into ./.tmp/ while both text fragments get printed;
 """
 
-import os, datetime
+import datetime, os, sqlite3
 import dotenv
 import extractors, translators, voiceovers
 
@@ -43,6 +43,19 @@ def main():
 
     Blocks until new text is found on the clipboard. Doesn't return anything
     """
+
+    connection = sqlite3.connect("./.tmp/backlog.db")
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS \"backlog\" (
+            \"order\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            \"l2_text\" TEXT,
+            \"l1_text\" TEXT,
+            \"l2_audio_filename\" TEXT,
+            \"timestamp\" TEXT
+        );
+        """)
 
     if ENABLE_INITIALIZATION_DOTFILES:
         initialize_dotfiles()
