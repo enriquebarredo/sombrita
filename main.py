@@ -47,15 +47,7 @@ def main():
     connection = sqlite3.connect("./.tmp/backlog.db")
     cursor = connection.cursor()
 
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS \"backlog\" (
-            \"order\" INTEGER PRIMARY KEY,
-            \"l2_text\" TEXT,
-            \"l1_text\" TEXT,
-            \"l2_audio_filename\" TEXT,
-            \"timestamp\" TEXT
-        );
-        """)
+#    cursor.executescript()
 
     if ENABLE_INITIALIZATION_DOTFILES:
         initialize_dotfiles()
