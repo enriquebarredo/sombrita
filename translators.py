@@ -4,7 +4,18 @@
 """Machine translation providers. Today only Lara Translate: API keys from .env: LARA_ACCESS_KEY_ID and LARA_ACCESS_KEY_SECRET."""
 
 import os
-import lara_sdk
+import lara_sdk, transformers
+
+# local model tasting
+local_model_name = "Helsinki-NLP/opus-mt_tiny_rus-eng"
+tokenizer = transformers.MarianTokenizer.from_pretrained(local_model_name)
+model = transformers.MarianMTModel.from_pretrained(local_model_name)
+
+def translate_opus_mt_ru_to_en(raws="Привет, мир!"):
+    tok = tokenizer(raws, return_tensors="pt").input_ids
+    output = model.generate(tok)[0]
+    return tokenizer.decode(output, skip_special_tokens=True)
+
 
 def lara_translate(raws="!Hola, mundo!", lang_in = "es-MX", lang_out = "en"):
     """

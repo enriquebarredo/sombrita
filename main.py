@@ -19,7 +19,7 @@ import extractors, translators, voiceovers
 # IETF BCP 47 language tags: For practical purposes, a 2-char ISO 639
 # optionally followed by a dash-prefixed region: ("es-MX", "fr-CA", "zh-CN").
 # Full list of what Lara accepts: https://developers.laratranslate.com/docs/supported-languages
-L1_CODE = "en"   # The language you understand
+L1_CODE = "en-GB"   # The language you understand
 L2_CODE = None   # The language you're learning--None is "Auto"; 
 
 ENABLE_INITIALIZATION_DOTFILES = True # Basic .env % .tmp check
@@ -62,6 +62,9 @@ def main():
         l1_text, identified_l2_code  = translators.lara_translate(raws = l2_text, lang_in = None, lang_out = L1_CODE)
         print(f"{identified_l2_code}: {l2_text}")
         l2_audio = voiceovers.fish_voiceover(raws=l2_text, lang_in=identified_l2_code)
+    elif L2_CODE == "ru-RU" and L1_CODE == "en-GB":
+        l1_text = translators.translate_opus_mt_ru_to_en(l2_text)
+        l2_audio = voiceovers.fish_voiceover(raws=l2_text, lang_in=L2_CODE)
     else:
         l1_text, _ = translators.lara_translate(raws = l2_text, lang_in = L2_CODE, lang_out = L1_CODE)
         print(f"{L2_CODE}: {l2_text}")

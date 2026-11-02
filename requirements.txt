@@ -1,5 +1,6 @@
 httpx==0.28.1
-lara_sdk==1.13.0
+lara_sdk==1.16.0
 pyperclip==1.11.0
-python-dotenv==1.2.3
+python-dotenv==1.2.4
 Requests==2.34.2
+sacremoses  #MarianTokenizer detokenizes through this
