@@ -2,7 +2,7 @@
 #SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 
 """
-Sombrita: Takes new text on the clipboard and generates translation and voiceover. You need to configure L1_CODE and L2_CODE.
+Sombrita: Takes new text on the clipboard. Generates translation, voiceover. You need to config L1_CODE and L2_CODE
 
 Single shot. Per run:
     1.- Clipboard: Poll indefinitely for next text on clipboard (L2 fragment).
@@ -15,27 +15,17 @@ import datetime, os, sqlite3
 import dotenv
 import extractors, translators, voiceovers
 
-########## config #############
+########## config constants #############
 # IETF BCP 47 language tags: For practical purposes, a 2-char ISO 639
 # optionally followed by a dash-prefixed region: ("es-MX", "fr-CA", "zh-CN").
 # Full list of what Lara accepts: https://developers.laratranslate.com/docs/supported-languages
-L1_CODE = "en-GB"   # The language you understand
-L2_CODE = None   # The language you're learning--None is "Auto"; 
+LAN1_IDENTIFIER = "en" # The language you understand
+REG1_IDENTIFIER = "GB" # L1's region code
+LAN2_IDENTIFIER = "ru" # Type None to auto-detect the language you're learning
+REG2_IDENTIFIER = "RU" # L2's region code
 
 ENABLE_INITIALIZATION_DOTFILES = True # Basic .env % .tmp check
-###############################
-
-
-# Normalize to lowercase lang, uppercase region: "ll-RR"
-# From now on it is assumed that the leftmost 2-characters stand for the lang,
-# the rightmost 2 for the region. If there's no region set, the normalization
-# will create a real region I don't support (e.g. "es-ES"), a completely made up
-# region ("zh-ZH"), or a real region I support (e.g. "ru-RU"), but that is okay,
-# because these mistakes will all match their respective default locale.
-if L2_CODE is not None:
-    L2_CODE = L2_CODE[:2].lower() + "-" + L2_CODE[-2:].upper()
-L1_CODE = L1_CODE[:2].lower() + "-" + L1_CODE[-2:].upper()
-
+#########################################
 
 def main():
     """
@@ -44,38 +34,55 @@ def main():
     Blocks until new text is found on the clipboard. Doesn't return anything
     """
 
-    connection = sqlite3.connect("./.tmp/backlog.db")
-    cursor = connection.cursor()
-
-#    cursor.executescript()
-
     if ENABLE_INITIALIZATION_DOTFILES:
         initialize_dotfiles()
+
+    connection = sqlite3.connect("./.tmp/backlog.db")
+    cursor = connection.cursor()
+#    cursor.executescript()
+
+    l1_code = make_locale_code(LAN1_IDENTIFIER, REG1_IDENTIFIER)
+    l2_code = make_locale_code(LAN2_IDENTIFIER, REG2_IDENTIFIER)
+    if l1_code is None:
+        print("No L1_CODE found, exiting")
+        return
 
     l2_text = extractors.clipboard_extract()
 
     timestamp = generate_timestamp()
 
-    if L2_CODE is None:
+    if l2_code is None:
         # Let translator auto-detect the source language, then hand the detected
         # code to the voiceover so the voice matches the actual L2.
-        l1_text, identified_l2_code  = translators.lara_translate(raws = l2_text, lang_in = None, lang_out = L1_CODE)
+        l1_text, identified_l2_code  = translators.lara_translate(raws = l2_text, lang_in = None, lang_out = l1_code)
         print(f"{identified_l2_code}: {l2_text}")
         l2_audio = voiceovers.fish_voiceover(raws=l2_text, lang_in=identified_l2_code)
-    elif L2_CODE == "ru-RU" and L1_CODE == "en-GB":
+    elif l2_code == "ru-RU" and l1_code == "en-GB":
         l1_text = translators.translate_opus_mt_ru_to_en(l2_text)
-        l2_audio = voiceovers.fish_voiceover(raws=l2_text, lang_in=L2_CODE)
+        print(f"{l2_code}: {l2_text}")
+        l2_audio = voiceovers.fish_voiceover(raws=l2_text, lang_in=l2_code)
     else:
-        l1_text, _ = translators.lara_translate(raws = l2_text, lang_in = L2_CODE, lang_out = L1_CODE)
-        print(f"{L2_CODE}: {l2_text}")
-        l2_audio = voiceovers.fish_voiceover(raws=l2_text, lang_in=L2_CODE)
+        l1_text, _ = translators.lara_translate(raws = l2_text, lang_in = l2_code, lang_out = l1_code)
+        print(f"{l2_code}: {l2_text}")
+        l2_audio = voiceovers.fish_voiceover(raws=l2_text, lang_in=l2_code)
 
     l2_audio_filename = "./.tmp/" + timestamp + ".mp3"
     with open(l2_audio_filename, "wb") as file:
         file.write(l2_audio)
-    print(f"{L1_CODE}: {l1_text}")   
+    print(f"{l1_code}: {l1_text}")
     print(f"✓ Audio saved to {l2_audio_filename}")
 
+def make_locale_code(language, region):
+    # "ll-RR". strip first, then normalize cases and slice. We assume the leftmost 2-chars are meaningful to guardrail
+    # against SOME mistakes, e.g. ll = ' español ' and rr =' RUSSIA' both map to the intended identifiers.
+    match (language, region):
+        case (None, _) | ("", _):
+            locale_code = None
+        case (_, None) | (_, ""): # there is a lang identifier but no region, just duplicate lang identifier
+            locale_code = language.strip()[:2].lower() + "-" + language.strip()[:2].upper()
+        case (_, _):
+            locale_code = language.strip()[:2].lower() + "-" + region.strip()[:2].upper()
+    return locale_code
 
 def generate_timestamp():
     """Filename-friendly, ISO-like, local timestamp (e.g. '26-09-23T08-52-39')."""

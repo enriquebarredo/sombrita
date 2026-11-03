@@ -3,4 +3,6 @@ lara_sdk==1.16.0
 pyperclip==1.11.0
 python-dotenv==1.2.4
 Requests==2.34.2
-sacremoses  #MarianTokenizer detokenizes through this
+transformers==5.22.1
+sacremoses  #MarianTokenizer
+sentencepiece       #MarianTokenizer

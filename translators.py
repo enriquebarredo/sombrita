@@ -1,7 +1,7 @@
 #SPDX-FileCopyrightText: 2026 Josué Enrique Barredo Alamilla
 #SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 
-"""Machine translation providers. Today only Lara Translate: API keys from .env: LARA_ACCESS_KEY_ID and LARA_ACCESS_KEY_SECRET."""
+"""Machine translation services. One is local. Lara Translate: API keys from .env: LARA_ACCESS_KEY_ID and LARA_ACCESS_KEY_SECRET."""
 
 import os
 import lara_sdk, transformers
