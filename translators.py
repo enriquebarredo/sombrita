@@ -7,9 +7,9 @@ import os
 import lara_sdk, transformers
 
 # local model tasting
-local_model_name = "Helsinki-NLP/opus-mt_tiny_rus-eng"
-tokenizer = transformers.MarianTokenizer.from_pretrained(local_model_name)
-model = transformers.MarianMTModel.from_pretrained(local_model_name)
+local_model_name = "" #"Helsinki-NLP/opus-mt_tiny_rus-eng" #"Helsinki-NLP/opus-mt-ru-en"
+tokenizer = transformers.AutoTokenizer.from_pretrained(local_model_name)
+model = transformers.AutoModelForSeq2SeqLM.from_pretrained(local_model_name)
 
 def translate_opus_mt_ru_to_en(raws="Привет, мир!"):
     tok = tokenizer(raws, return_tensors="pt").input_ids
