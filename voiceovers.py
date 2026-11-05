@@ -13,7 +13,7 @@ TODO: fish_audio_explore.py could be folded for dynamic voice model lookup, but 
 """
 
 import os, random
-import httpx
+import httpx, kittentts, soundfile, io
 
 #  i learnt i shouldn't have attempted to judge tts in languages i don't know
 FISHAUDIO_VOICES = {
@@ -98,6 +98,16 @@ FISHAUDIO_VOICES = {
 #               ],
 #                      }
 
+def kittentts_voiceover(raws):
+    model = kittentts.KittenTTS("KittenML/kitten-tts-mini-0.8")
+    pcm_binary = model.generate(raws, voice="Leo")
+    # available_voices : ['Bella', 'Jasper', 'Luna', 'Bruno', 'Rosie', 'Hugo', 'Kiki', 'Leo']
+    # kittentts returns
+    buffer = io.BytesIO()
+    soundfile.write(buffer, pcm_binary, samplerate=24000, format="mp3")
+    return buffer.getvalue(), ".mp3"
+
+
 def fish_voiceover(raws="!Hola, mundo!", lang_in="es"):
     """
     TTS raws string with Fish Audio. Return bytes (.mp3).
@@ -155,6 +165,4 @@ def fish_voiceover(raws="!Hola, mundo!", lang_in="es"):
 
     response.raise_for_status()
 
-    voiceover = response.content
-
-    return voiceover
+    return response.content, ".mp3"
