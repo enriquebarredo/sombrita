@@ -7,7 +7,7 @@ import os
 import lara_sdk, transformers
 
 # local model tasting
-local_model_name = "" #"Helsinki-NLP/opus-mt_tiny_rus-eng" #"Helsinki-NLP/opus-mt-ru-en"
+local_model_name = "Helsinki-NLP/opus-mt-ru-en" #"Helsinki-NLP/opus-mt_tiny_rus-eng" #"Helsinki-NLP/opus-mt-ru-en"
 tokenizer = transformers.AutoTokenizer.from_pretrained(local_model_name)
 model = transformers.AutoModelForSeq2SeqLM.from_pretrained(local_model_name)
 
